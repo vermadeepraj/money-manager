@@ -1,0 +1,722 @@
+@import url('https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&display=swap');
+@import "tailwindcss";
+@plugin "@tailwindcss/forms";
+@plugin "./hero.ts";
+
+/* ============================================ */
+/* CSS Custom Properties */
+/* ============================================ */
+@theme {
+  --color-background: var(--bg-primary);
+  --color-foreground: var(--text-primary);
+  --color-muted: var(--text-muted);
+  --color-muted-foreground: var(--text-secondary);
+  --color-card: var(--bg-secondary);
+  --color-card-foreground: var(--text-primary);
+  --color-popover: var(--bg-secondary);
+  --color-popover-foreground: var(--text-primary);
+  --color-border: var(--border-subtle);
+  --color-input: var(--border-subtle);
+  --color-primary: var(--accent);
+  --color-primary-foreground: #FFFFFF;
+  --color-secondary: var(--bg-secondary);
+  --color-secondary-foreground: var(--text-primary);
+  --color-accent: var(--accent);
+  --color-accent-foreground: #FFFFFF;
+  --color-destructive: var(--danger);
+  --color-destructive-foreground: #FFFFFF;
+  --color-ring: var(--accent);
+}
+
+:root {
+  /* Colors - Light Mode */
+  --bg-primary: #FAFAFA;
+  --bg-secondary: #FFFFFF;
+  --border-subtle: rgba(0, 0, 0, 0.06);
+
+  --text-primary: #18181B;
+  --text-secondary: #52525b;
+  --text-muted: #71717A;
+
+  /* Accent - Indigo */
+  --accent: #6366F1;
+  --accent-hover: #4F46E5;
+  
+  /* Semantic colors - Modern alternative */
+  --income: #3B82F6;        /* blue-500 */
+  --income-light: #60A5FA;  /* blue-400 */
+  --expense: #F97316;       /* orange-500 */
+  --expense-light: #FB923C; /* orange-400 */
+  --success: #10B981;
+  --danger: #EF4444;
+  --warning: #F59E0B;
+
+  /* Glass effect - Light mode (soft, subtle) */
+  --glass-bg: rgba(255, 255, 255, 0.9);
+  --glass-border: rgba(0, 0, 0, 0.05);
+  --glass-hover: rgba(0, 0, 0, 0.03);
+  
+  /* Glass input - Light mode */
+  --glass-input-bg: rgba(255, 255, 255, 0.9);
+  --glass-input-border: rgba(0, 0, 0, 0.08);
+  --glass-input-focus: rgba(99, 102, 241, 0.1);
+
+  /* Shadows - Light mode (softer) */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.04);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.08);
+  --shadow-lift: 0 12px 28px rgba(0, 0, 0, 0.1), 0 4px 8px rgba(0, 0, 0, 0.05);
+
+  /* Radius */
+  --radius: 0.75rem;
+
+  /* 3D Effect Variables */
+  --btn-shadow: 0 2px 0 rgba(0, 0, 0, 0.03), 0 4px 6px rgba(0, 0, 0, 0.05);
+  --btn-shadow-hover: 0 1px 0 rgba(0, 0, 0, 0.03), 0 2px 4px rgba(0, 0, 0, 0.05);
+  --btn-shadow-active: 0 0 0 rgba(0, 0, 0, 0.03), inset 0 1px 2px rgba(0, 0, 0, 0.06);
+  --card-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  --card-shadow-hover: 0 12px 28px rgba(0, 0, 0, 0.08), 0 4px 8px rgba(0, 0, 0, 0.04);
+}
+
+.dark {
+  /* Colors - Dark Mode */
+  --bg-primary: #09090B;
+  --bg-secondary: #18181B;
+  --border-subtle: rgba(255, 255, 255, 0.1);
+
+  --text-primary: #FAFAFA;
+  --text-secondary: #A1A1AA;
+  --text-muted: #71717A;
+
+  /* Glass effect - Dark mode (medium dark glass) */
+  --glass-bg: rgba(38, 38, 42, 0.7);
+  --glass-border: rgba(255, 255, 255, 0.08);
+  --glass-hover: rgba(38, 38, 42, 0.85);
+  
+  /* Glass input - Dark mode */
+  --glass-input-bg: rgba(39, 39, 42, 0.8);
+  --glass-input-border: rgba(255, 255, 255, 0.1);
+  --glass-input-focus: rgba(99, 102, 241, 0.2);
+
+  /* Dark mode shadows */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.5);
+  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.6);
+  --shadow-lift: 0 12px 28px rgba(0, 0, 0, 0.5), 0 4px 8px rgba(0, 0, 0, 0.3);
+  --shadow-glow: 0 0 20px rgba(99, 102, 241, 0.2);
+
+  /* 3D Effect Variables */
+  --btn-shadow: 0 2px 0 rgba(0, 0, 0, 0.3), 0 4px 6px rgba(0, 0, 0, 0.3);
+  --btn-shadow-hover: 0 1px 0 rgba(0, 0, 0, 0.3), 0 2px 4px rgba(0, 0, 0, 0.3);
+  --btn-shadow-active: 0 0 0 rgba(0, 0, 0, 0.3), inset 0 1px 2px rgba(0, 0, 0, 0.4);
+  --card-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  --card-shadow-hover: 0 12px 28px rgba(0, 0, 0, 0.5), 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+/* ============================================ */
+/* Base Styles */
+/* ============================================ */
+* {
+  border-color: var(--border-subtle);
+}
+
+body {
+  font-family: 'Geist', system-ui, sans-serif;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  /* Ambient Background Gradient for Premium Feel */
+  background-image:
+    radial-gradient(circle at 15% 0%, rgba(99, 102, 241, 0.06) 0%, transparent 40%),
+    radial-gradient(circle at 85% 30%, rgba(99, 102, 241, 0.04) 0%, transparent 40%);
+  background-attachment: fixed;
+}
+
+/* ============================================ */
+/* Glassmorphism Utilities */
+/* ============================================ */
+.glass-card {
+  background: var(--glass-bg);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius);
+  box-shadow: var(--card-shadow);
+}
+
+.glass-panel {
+  background: var(--glass-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius);
+}
+
+.glass-sidebar {
+  background: var(--glass-bg);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-right: 1px solid var(--glass-border);
+}
+
+.glass-input {
+  background: var(--glass-input-bg) !important;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border-color: var(--glass-input-border) !important;
+  transition: all 0.2s ease;
+}
+
+.glass-input:hover {
+  border-color: var(--accent) !important;
+}
+
+.glass-input:focus,
+.glass-input:focus-within {
+  border-color: var(--accent) !important;
+  box-shadow: 0 0 0 3px var(--glass-input-focus);
+}
+
+.glass-dropdown,
+.glass-dropdown * {
+  border: none !important;
+  outline: none !important;
+}
+
+.glass-dropdown {
+  background: var(--bg-secondary) !important;
+  border: 1px solid var(--glass-border) !important;
+  border-radius: var(--radius) !important;
+  box-shadow: var(--shadow-lg) !important;
+  overflow: hidden !important;
+}
+
+.glass-modal {
+  background: var(--glass-bg);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--glass-border);
+}
+
+/* ============================================ */
+/* Lift Hover Effect */
+/* ============================================ */
+.card-lift {
+  transition: transform 200ms ease-out, box-shadow 200ms ease-out;
+}
+
+.card-lift:hover {
+  transform: translateY(-4px) scale(1.01);
+  box-shadow: var(--card-shadow-hover);
+}
+
+/* Legacy hover class - now using lift */
+.card-hover {
+  transition: transform 200ms ease-out, box-shadow 200ms ease-out, border-color 200ms ease-out;
+}
+
+.card-hover:hover {
+  transform: translateY(-4px) scale(1.01);
+  box-shadow: var(--card-shadow-hover);
+  border-color: rgba(99, 102, 241, 0.3);
+}
+
+/* ============================================ */
+/* Income/Expense Colors */
+/* ============================================ */
+.text-income {
+  color: var(--income);
+}
+
+.text-expense {
+  color: var(--expense);
+}
+
+.dark .text-income {
+  color: var(--income-light);
+}
+
+.dark .text-expense {
+  color: var(--expense-light);
+}
+
+.bg-income {
+  background-color: var(--income);
+}
+
+.bg-expense {
+  background-color: var(--expense);
+}
+
+/* ============================================ */
+/* Typography */
+/* ============================================ */
+.tabular-nums {
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.01em;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  letter-spacing: -0.02em;
+}
+
+/* ============================================ */
+/* 3D Button Effects */
+/* ============================================ */
+.btn-3d {
+  border-radius: 10px;
+  box-shadow: var(--btn-shadow);
+  transform: translateY(0);
+  transition: all 150ms ease-out;
+  border: 1px solid var(--border-subtle);
+}
+
+.btn-3d:hover {
+  transform: translateY(1px);
+  box-shadow: var(--btn-shadow-hover);
+}
+
+.btn-3d:active,
+.btn-3d[data-pressed="true"] {
+  transform: translateY(2px);
+  box-shadow: var(--btn-shadow-active);
+}
+
+/* Ghost and link buttons should not have 3D effect */
+.btn-3d.btn-flat {
+  box-shadow: none;
+  border: none;
+}
+
+.btn-3d.btn-flat:hover,
+.btn-3d.btn-flat:active,
+.btn-3d.btn-flat[data-pressed="true"] {
+  box-shadow: none;
+  transform: none;
+}
+
+/* ============================================ */
+/* 3D Card Effects */
+/* ============================================ */
+.card-3d {
+  border-radius: 16px;
+  box-shadow: var(--card-shadow);
+  border: 1px solid var(--border-subtle);
+  transition: all 200ms ease-out;
+  background: var(--glass-bg);
+}
+
+.card-3d:hover {
+  transform: translateY(-4px) scale(1.01);
+  box-shadow: var(--card-shadow-hover);
+}
+
+.animate-in {
+  animation: fade-in 0.3s ease-out;
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(5px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Skeleton Shimmer */
+.skeleton-shimmer {
+  background: linear-gradient(90deg,
+      var(--glass-bg) 25%,
+      var(--glass-hover) 50%,
+      var(--glass-bg) 75%);
+  background-size: 200% 100%;
+  animation: shimmer 2s ease-in-out infinite;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+/* ============================================ */
+/* Scrollbar */
+/* ============================================ */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border-subtle);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-muted);
+}
+
+/* ============================================ */
+/* Auth Pages Background */
+/* ============================================ */
+.login-bg {
+  min-height: 100vh;
+  min-height: 100dvh;
+  background-color: var(--bg-primary);
+  position: relative;
+  overflow: hidden;
+}
+
+.login-bg::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    radial-gradient(circle at 20% 20%, rgba(99, 102, 241, 0.12) 0%, transparent 50%),
+    radial-gradient(circle at 80% 80%, rgba(99, 102, 241, 0.08) 0%, transparent 50%),
+    radial-gradient(circle at 50% 50%, rgba(113, 113, 122, 0.06) 0%, transparent 60%);
+  pointer-events: none;
+}
+
+/* Grid Pattern for auth pages */
+.auth-grid-pattern {
+  background-image: 
+    linear-gradient(var(--glass-border) 1px, transparent 1px),
+    linear-gradient(90deg, var(--glass-border) 1px, transparent 1px);
+  background-size: 48px 48px;
+}
+
+/* ============================================ */
+/* Enhanced Input Focus Effects */
+/* ============================================ */
+.auth-input {
+  transition: all 0.3s ease;
+}
+
+.auth-input:focus {
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15), 0 0 20px rgba(99, 102, 241, 0.1);
+}
+
+.auth-input:focus-within {
+  border-color: rgba(99, 102, 241, 0.5);
+}
+
+/* ============================================ */
+/* Auth Card Glow Effect */
+/* ============================================ */
+.auth-card {
+  transition: all 0.4s ease;
+}
+
+.auth-card:hover {
+  box-shadow: 
+    0 0 40px rgba(99, 102, 241, 0.1),
+    0 0 80px rgba(99, 102, 241, 0.05),
+    0 25px 50px -12px rgba(0, 0, 0, 0.4);
+}
+
+/* ============================================ */
+/* Gradient Text Animation */
+/* ============================================ */
+@keyframes gradient-shift {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+.animate-gradient {
+  background-size: 200% auto;
+  animation: gradient-shift 4s ease infinite;
+}
+
+/* ============================================ */
+/* Floating Animation */
+/* ============================================ */
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+.animate-float-delayed {
+  animation: float 3s ease-in-out infinite;
+  animation-delay: 1s;
+}
+
+.animate-float-slow {
+  animation: float 4s ease-in-out infinite;
+  animation-delay: 0.5s;
+}
+
+/* ============================================ */
+/* Pulse Glow Animation */
+/* ============================================ */
+@keyframes pulse-glow {
+  0%, 100% {
+    opacity: 0.5;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.8;
+    transform: scale(1.05);
+  }
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 4s ease-in-out infinite;
+}
+
+/* ============================================ */
+/* HeroUI Overrides for Theme Consistency */
+/* ============================================ */
+
+/* Select/Dropdown trigger */
+[data-slot="trigger"] {
+  background: var(--glass-input-bg) !important;
+  border-color: var(--glass-input-border) !important;
+  min-height: 40px !important;
+  height: 40px !important;
+  outline: none !important;
+}
+
+[data-slot="trigger"]:hover {
+  border-color: var(--accent) !important;
+}
+
+[data-slot="trigger"]:focus,
+[data-slot="trigger"]:focus-visible {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+/* Select indicator (dropdown arrow) - ensure it's visible */
+[data-slot="selector-icon"],
+[data-slot="indicator"] {
+  color: var(--text-secondary) !important;
+  flex-shrink: 0 !important;
+  opacity: 1 !important;
+}
+
+/* Ensure select trigger inner content has proper layout */
+[data-slot="trigger"] [data-slot="innerWrapper"] {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  width: 100% !important;
+}
+
+/* Select value text should not overflow */
+[data-slot="value"] {
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  white-space: nowrap !important;
+  flex: 1 !important;
+}
+
+/* ============================================ */
+/* Dropdown/Popover - NUCLEAR FIX for borders  */
+/* ============================================ */
+
+/* 
+ * HeroUI creates multiple nested wrapper elements:
+ * Portal > Popover wrapper > Content wrapper > Menu
+ * Each can have borders. We nuke them ALL then add back ONE.
+ */
+
+/* Step 1: Remove ALL borders/shadows from everything in the portal */
+div[data-floating-ui-portal],
+div[data-floating-ui-portal] *:not([role="menu"]):not([role="listbox"]) {
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+/* Step 2: The popover/content wrapper specifically */
+[data-slot="popover"],
+[data-slot="content"],
+[data-slot="base"]:not([role="dialog"]):not([role="menu"]) {
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+  background: transparent !important;
+}
+
+/* Step 3: Style ONLY the actual menu element with a single clean border */
+[role="menu"],
+[role="listbox"] {
+  background: var(--bg-secondary) !important;
+  border: 1px solid var(--glass-border) !important;
+  border-radius: 12px !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08), 0 8px 32px rgba(0, 0, 0, 0.06) !important;
+  outline: none !important;
+  overflow: hidden !important;
+}
+
+/* Step 4: Dark mode shadow/border adjustment */
+.dark [role="menu"],
+.dark [role="listbox"] {
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4), 0 8px 32px rgba(0, 0, 0, 0.3) !important;
+  border-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+/* Step 5: Remove ALL borders from inner menu elements */
+[role="menu"] > *,
+[role="listbox"] > *,
+[role="menu"] [data-slot],
+[role="listbox"] [data-slot] {
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+/* Step 6: Allow only section dividers to have a border */
+[role="menu"] [role="separator"],
+[role="menu"] hr,
+[data-slot="divider"] {
+  border: none !important;
+  border-top: 1px solid var(--glass-border) !important;
+  margin: 4px 0 !important;
+}
+
+/* Step 7: Menu items - completely clean */
+[role="menuitem"],
+[role="option"] {
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+/* Step 8: Focus states - no visual outline */
+[role="menu"] *:focus,
+[role="menu"] *:focus-visible,
+[role="listbox"] *:focus,
+[role="listbox"] *:focus-visible {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+/* Step 9: HeroUI specific nested wrappers */
+[data-focus-guard],
+[data-floating-ui-portal] > div > div,
+[data-floating-ui-portal] > div > div > div {
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+  background: transparent !important;
+}
+
+/* Remove global focus outlines */
+*:focus {
+  outline: none !important;
+}
+
+*:focus-visible {
+  outline: none !important;
+}
+
+/* Input wrapper - clean single border */
+[data-slot="input-wrapper"] {
+  background: var(--glass-input-bg) !important;
+  border-color: var(--glass-input-border) !important;
+  min-height: 40px !important;
+  height: 40px !important;
+  box-shadow: none !important;
+  outline: none !important;
+}
+
+[data-slot="input-wrapper"]:hover {
+  border-color: var(--accent) !important;
+}
+
+[data-slot="input-wrapper"]:focus,
+[data-slot="input-wrapper"]:focus-within,
+[data-slot="input-wrapper"][data-focus="true"] {
+  border-color: var(--accent) !important;
+  box-shadow: 0 0 0 2px var(--glass-input-focus) !important;
+  outline: none !important;
+}
+
+/* Main wrapper should not add extra border */
+[data-slot="main-wrapper"] {
+  border: none !important;
+  box-shadow: none !important;
+  outline: none !important;
+}
+
+/* Base input component - prevent double wrapping issues */
+[data-slot="base"] input {
+  border: none !important;
+  box-shadow: none !important;
+  outline: none !important;
+}
+
+/* Table wrapper */
+[data-slot="wrapper"] {
+  background: var(--glass-bg) !important;
+  border: 1px solid var(--glass-border) !important;
+  outline: none !important;
+}
+
+/* Modal base - only apply glass to actual modals */
+section[data-slot="base"],
+div[role="dialog"][data-slot="base"] {
+  background: var(--glass-bg) !important;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  outline: none !important;
+  border-radius: 16px !important;
+}
+
+/* Button reset for dropdown triggers */
+button:focus,
+button:focus-visible {
+  outline: none !important;
+}
+
+/* ============================================ */
+/* Form Label Styles */
+/* ============================================ */
+
+/* Standard form label */
+.form-label {
+  display: block;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--text-primary);
+  margin-bottom: 0.375rem;
+}
+
+/* Hide HeroUI's built-in labels when we use custom ones */
+[data-slot="label"] {
+  display: none !important;
+}

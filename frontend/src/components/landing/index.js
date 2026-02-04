@@ -1,0 +1,10 @@
+// Landing page components
+export { Navbar } from './Navbar'
+export { HeroSection } from './HeroSection'
+export { FeaturesSection } from './FeaturesSection'
+export { HowItWorks } from './HowItWorks'
+export { Screenshots } from './Screenshots'
+export { Testimonials } from './Testimonials'
+export { FAQ } from './FAQ'
+export { CTASection } from './CTASection'
+export { Footer } from './Footer'

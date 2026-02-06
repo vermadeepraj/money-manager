@@ -11,6 +11,7 @@ import {
     Moon,
     Sun,
 } from 'lucide-react';
+import { Select, SelectItem } from '@heroui/react';
 import { useUIStore } from '../../stores/uiStore';
 import { cn } from '../../lib/utils';
 import { Button } from '../ui/button';
@@ -27,7 +28,12 @@ const navItems = [
 ];
 
 export function AppLayout() {
-    const { theme, toggleTheme, sidebarCollapsed, toggleSidebarCollapse, sidebarOpen, setSidebarOpen } = useUIStore();
+    const {
+        theme, toggleTheme,
+        sidebarCollapsed, toggleSidebarCollapse,
+        sidebarOpen, setSidebarOpen,
+        activeDivision, setDivision
+    } = useUIStore();
 
     return (
         <div className="flex min-h-screen">
@@ -131,8 +137,33 @@ export function AppLayout() {
                         {/* Could put breadcrumbs here */}
                     </div>
 
+                    {/* Division Switcher */}
+                    <div className="flex items-center gap-4 ml-auto mr-4">
+                        <Select
+                            selectedKeys={[activeDivision]}
+                            onSelectionChange={(keys) => {
+                                const val = Array.from(keys)[0];
+                                if (val) setDivision(val);
+                            }}
+                            className="w-32"
+                            size="sm"
+                            variant="flat"
+                            classNames={{
+                                trigger: "bg-white/5 border border-white/10 hover:bg-white/10 transition-colors",
+                                value: "text-small font-medium",
+                            }}
+                        >
+                            <SelectItem key="personal" startContent={<span className="text-lg">👤</span>}>
+                                Personal
+                            </SelectItem>
+                            <SelectItem key="office" startContent={<span className="text-lg">🏢</span>}>
+                                Office
+                            </SelectItem>
+                        </Select>
+                    </div>
+
                     {/* User Profile Dropdown */}
-                    <div className="ml-auto">
+                    <div>
                         <ProfileDropdown />
                     </div>
                 </header>

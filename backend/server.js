@@ -15,21 +15,27 @@ connectDB();
 
 // Security: Set various HTTP headers
 // Configure helmet to allow serving static files (profile pictures)
+// Configure helmet to allow serving static files (profile pictures) and Auth popups
 app.use(helmet({
-    crossOriginResourcePolicy: { policy: 'cross-origin' }
+    crossOriginResourcePolicy: { policy: 'cross-origin' },
+    crossOriginOpenerPolicy: { policy: "same-origin-allow-popups" },
 }));
 
 // Serve static files (profile pictures)
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 // CORS: Must be BEFORE rate limiting to handle preflight OPTIONS requests
+const getCleanUrl = (url) => url ? url.replace(/\/$/, '') : null;
+
 const allowedOrigins = [
-    process.env.FRONTEND_URL,
+    getCleanUrl(process.env.FRONTEND_URL),
     'http://localhost:5173',
     'http://localhost:5174',
     'http://localhost:5175',
     'http://localhost:5176'
 ].filter(Boolean);
+
+console.log('Allowed Origins:', allowedOrigins);
 
 app.use(cors({
     origin: function (origin, callback) {
@@ -39,6 +45,7 @@ app.use(cors({
         if (allowedOrigins.includes(origin)) {
             callback(null, true);
         } else {
+            console.error(`Blocked by CORS: ${origin}`);
             callback(new Error('Not allowed by CORS'));
         }
     },
@@ -69,7 +76,7 @@ app.use('/api/', limiter);
 // Stricter rate limit for auth routes (prevent brute force)
 const authLimiter = rateLimit({
     windowMs: 15 * 60 * 1000, // 15 minutes
-    max: 10, // Limit each IP to 10 login attempts per windowMs
+    max: 100, // Limit each IP to 100 login attempts per windowMs
     message: {
         success: false,
         error: {

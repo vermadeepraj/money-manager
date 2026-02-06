@@ -1,0 +1,23 @@
+Submission Details
+==================
+
+1. Backend Application URL:
+https://wealthwise-5du8.onrender.com/api/v1/health (API Root)
+
+2. Frontend Application URL:
+https://wealth-wise-bay.vercel.app
+
+3. Github Repositories:
+   - Frontend: https://github.com/YOUR_USERNAME/money-manager-frontend
+   - Backend:  https://github.com/YOUR_USERNAME/money-manager-backend
+
+4. Last Committed Hash IDs:
+   - Frontend: a062f7aaf1e7afc8890e355389e64c6ee3f81e07
+   - Backend:  a062f7aaf1e7afc8890e355389e64c6ee3f81e07
+
+Terms and Conditions
+====================
+[x] You agree that this hackathon deadline is 72 hours
+[x] You agree to not share this confidential document with anyone.
+[x] You agree to open-source your code.
+[x] We will never use your source code under any circumstances for any commercial purposes.

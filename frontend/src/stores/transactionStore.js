@@ -1,5 +1,11 @@
 import { create } from 'zustand';
 import { transactionsAPI } from '../lib/api';
+import {
+    startOfWeek, endOfWeek, eachDayOfInterval,
+    startOfMonth, endOfMonth,
+    startOfYear, endOfYear,
+    format
+} from 'date-fns';
 
 export const useTransactionStore = create((set, get) => ({
     // State
@@ -142,15 +148,55 @@ export const useTransactionStore = create((set, get) => ({
         }
     },
 
+
     /**
-     * Fetch trends data
+     * Fetch trends data with gap filling
      */
     fetchTrends: async (period) => {
         try {
             const response = await transactionsAPI.getTrends({ period });
-            set({ trends: response.data.data.trend || [] });
+            const rawTrends = response.data.data.trend || [];
+
+            // Generate full date range based on period
+            const now = new Date();
+            let start, end;
+
+            switch (period) {
+                case 'week':
+                    start = startOfWeek(now);
+                    end = endOfWeek(now);
+                    break;
+                case 'month':
+                    start = startOfMonth(now);
+                    end = endOfMonth(now);
+                    break;
+                case 'year':
+                    start = startOfYear(now);
+                    end = endOfYear(now);
+                    break;
+                default:
+                    start = startOfMonth(now);
+                    end = endOfMonth(now);
+            }
+
+            const allDates = eachDayOfInterval({ start, end });
+
+            // Fill gaps
+            const filledTrends = allDates.map(date => {
+                const dateStr = format(date, 'yyyy-MM-dd');
+                const found = rawTrends.find(t => t.date === dateStr);
+
+                return found || {
+                    date: dateStr,
+                    income: 0,
+                    expense: 0,
+                    net: 0
+                };
+            });
+
+            set({ trends: filledTrends });
         } catch {
-            // Silent fail
+            set({ trends: [] });
         }
     },
 

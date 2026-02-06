@@ -18,12 +18,12 @@ import {
 } from '../ui/modal'
 import { Select, SelectItem } from '@heroui/react'
 import { toast } from 'sonner'
-import { 
-    TRANSACTION_TYPES, 
-    DIVISIONS, 
+import {
+    TRANSACTION_TYPES,
+    DIVISIONS,
     DIVISION_OPTIONS,
     MODALS,
-    CURRENCY 
+    CURRENCY
 } from '../../constants'
 
 const transactionSchema = z.object({
@@ -40,7 +40,7 @@ const transactionSchema = z.object({
 })
 
 export function AddTransactionModal() {
-    const { activeModal, closeModal } = useUIStore()
+    const { activeModal, closeModal, activeDivision } = useUIStore()
     const { createTransaction } = useTransactionStore()
     const [categories, setCategories] = useState([])
     const [accounts, setAccounts] = useState([])
@@ -65,7 +65,7 @@ export function AddTransactionModal() {
             accountId: '',
             description: '',
             date: new Date().toISOString().split('T')[0],
-            division: DIVISIONS.PERSONAL,
+            division: activeDivision || DIVISIONS.PERSONAL,
         },
     })
 

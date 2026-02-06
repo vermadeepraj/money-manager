@@ -8,8 +8,8 @@ https://wealthwise-5du8.onrender.com/api/v1/health (API Root)
 https://wealth-wise-bay.vercel.app
 
 3. Github Repositories:
-   - Frontend: https://github.com/YOUR_USERNAME/money-manager-frontend
-   - Backend:  https://github.com/YOUR_USERNAME/money-manager-backend
+   - Frontend:https://github.com/vermadeepraj/WealthWise/tree/main/frontend
+   - Backend: https://github.com/vermadeepraj/WealthWise/tree/main/backend
 
 4. Last Committed Hash IDs:
    - Frontend: a062f7aaf1e7afc8890e355389e64c6ee3f81e07
